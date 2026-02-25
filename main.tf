@@ -1,8 +1,9 @@
 provider "kubernetes" {
   config_path = "~/.kube/config"
 }
-resource "kubernetes_namespace" "flask_ns" {
+resource "kubernetes_namespace" "mega_ns" {
   metadata {
-    name = "flask-app"
+    name = "megaproject"
   }
 }
+
