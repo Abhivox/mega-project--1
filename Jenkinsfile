@@ -39,7 +39,6 @@ pipeline {
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
                     bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
-                    
                     bat 'docker push %DOCKER_IMAGE%'
                 }
             }
@@ -47,8 +46,9 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl apply -f k8deploy.yaml'
-               
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    bat 'kubectl apply -f k8deploy.yaml'
+                }
             }
         }
     }
