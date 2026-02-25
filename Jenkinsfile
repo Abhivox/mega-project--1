@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "YOUR_DOCKERHUB_USERNAME/flask-task-app"
+        DOCKER_IMAGE = "abhi13055/megaproject1"
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
+                git 'https://github.com/Abhivox/mega-project--1.git'
             }
         }
 
