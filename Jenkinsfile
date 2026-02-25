@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "abhi13055/megaproject1"
+        DOCKER_IMAGE = "abhi13055/megaproject1:latest"
     }
 
     stages {
@@ -33,7 +33,14 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                bat 'docker push %DOCKER_IMAGE%'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+                    bat 'docker push %DOCKER_IMAGE%'
+                }
             }
         }
 
