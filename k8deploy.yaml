@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-task-app
+  name: mega-project-1
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask-task-app
+      app: mega-project-1
   template:
     metadata:
       labels:
-        app: flask-task-app
+        app: mega-project-1
     spec:
       containers:
-      - name: flask-task-app
-        image: your-dockerhub-username/flask-task-app
+      - name: mega-project-1
+        image: abhi13055/megaproject1
         ports:
         - containerPort: 5000
 
@@ -32,3 +32,4 @@ spec:
     - port: 80
       targetPort: 5000
       nodePort: 30007
+
