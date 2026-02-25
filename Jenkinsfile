@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "YOUR_DOCKERHUB_USERNAME/flask-task-app"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
+            }
+        }
+
+        stage('Create Virtual Env') {
+            steps {
+                bat 'python -m venv venv'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'venv\\Scripts\\pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'venv\\Scripts\\pytest test_app.py'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t %DOCKER_IMAGE% .'
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                bat 'docker push %DOCKER_IMAGE%'
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                bat 'kubectl apply -f deployment.yaml'
+                bat 'kubectl apply -f service.yaml'
+            }
+        }
+    }
+}
