@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Abhivox/mega-project--1.git'
-            }
-        }
-
         stage('Create Virtual Env') {
             steps {
                 bat 'python -m venv venv'
